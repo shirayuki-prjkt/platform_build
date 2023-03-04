@@ -1,0 +1,24 @@
+make/core/config.mk:include vendor/syberia/config/BoardConfigSyberia.mk
+make/core/config.mk:ifneq ($(wildcard device/syberia/sepolicy/common/sepolicy.mk),)
+make/core/config.mk:$(eval include device/syberia/sepolicy/common/sepolicy.mk)
+make/core/pathmap.mk:-include vendor/syberia/build/core/pathmap.mk
+make/envsetup.sh:    __print_syberia_functions_help
+make/envsetup.sh:    for i in `cat $T/build/envsetup.sh $T/vendor/syberia/build/envsetup.sh | sed -n "/^[[:blank:]]*function /s/function \([a-z_]*\).*/\1/p" | sort | uniq`; do
+make/envsetup.sh:    cached_vars=(`cat $T/build/envsetup.sh $T/vendor/syberia/build/envsetup.sh | tr '()' '  ' | awk '{for(i=1;i<=NF;i++) if($i~/get_build_var/) print $(i+1)}' | sort -u | tr '\n' ' '`)
+make/envsetup.sh:    cached_abs_vars=(`cat $T/build/envsetup.sh $T/vendor/syberia/build/envsetup.sh | tr '()' '  ' | awk '{for(i=1;i<=NF;i++) if($i~/get_abs_build_var/) print $(i+1)}' | sort -u | tr '\n' ' '`)
+make/envsetup.sh:    if (echo -n $1 | grep -q -e "^syberia_") ; then
+make/envsetup.sh:        SYBERIA_BUILD=$(echo -n $1 | sed -e 's/^syberia_//g')
+make/envsetup.sh:. $ANDROID_BUILD_TOP/vendor/syberia/build/envsetup.sh
+make/tools/buildinfo.sh:echo "ro.syberia.device=$SYBERIA_DEVICE"
+core/config.mk:include vendor/syberia/config/BoardConfigSyberia.mk
+core/config.mk:ifneq ($(wildcard device/syberia/sepolicy/common/sepolicy.mk),)
+core/config.mk:$(eval include device/syberia/sepolicy/common/sepolicy.mk)
+core/pathmap.mk:-include vendor/syberia/build/core/pathmap.mk
+envsetup.sh:    __print_syberia_functions_help
+envsetup.sh:    for i in `cat $T/build/envsetup.sh $T/vendor/syberia/build/envsetup.sh | sed -n "/^[[:blank:]]*function /s/function \([a-z_]*\).*/\1/p" | sort | uniq`; do
+envsetup.sh:    cached_vars=(`cat $T/build/envsetup.sh $T/vendor/syberia/build/envsetup.sh | tr '()' '  ' | awk '{for(i=1;i<=NF;i++) if($i~/get_build_var/) print $(i+1)}' | sort -u | tr '\n' ' '`)
+envsetup.sh:    cached_abs_vars=(`cat $T/build/envsetup.sh $T/vendor/syberia/build/envsetup.sh | tr '()' '  ' | awk '{for(i=1;i<=NF;i++) if($i~/get_abs_build_var/) print $(i+1)}' | sort -u | tr '\n' ' '`)
+envsetup.sh:    if (echo -n $1 | grep -q -e "^syberia_") ; then
+envsetup.sh:        SYBERIA_BUILD=$(echo -n $1 | sed -e 's/^syberia_//g')
+envsetup.sh:. $ANDROID_BUILD_TOP/vendor/syberia/build/envsetup.sh
+tools/buildinfo.sh:echo "ro.syberia.device=$SYBERIA_DEVICE"
